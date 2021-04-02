@@ -1,0 +1,21 @@
+{
+  "name": "youtube-livechat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "repository": "https://github.com/OngDev/youtube-livechat.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7"
+  }
+}
