@@ -7,6 +7,7 @@ const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILQ3ZtOGVzYmdBeG8';
 const { API_KEY } = process.env;
 
 let messages = [];
+let authors = [];
 let _pollingIntervalMillis, _nextPageToken;
 
 export async function fetchMessages(pageToken = "") {
@@ -39,23 +40,50 @@ export async function fetchMessages(pageToken = "") {
 }
 
 const mapMessages = (items) => {
-    const newMessages = items.map(({ id, snippet, authorDetails }) => {
+    for (let index = 0; index < items.length; index++) {
+        const { id, snippet, authorDetails } = items[index];
         const { publishedAt, displayMessage } = snippet;
-        const { displayName, profileImageUrl } = authorDetails;
-        return {
+        const { channelId, displayName, profileImageUrl, isChatOwner, isChatSponsor, isChatModerator } = authorDetails;
+
+        const existedAuthor = authors.find(({id}) => id === channelId);
+        if(!existedAuthor) {
+            const author = {
+                id: channelId,
+                name: displayName,
+                avatarUrl: profileImageUrl,
+                role: "chauongdev"
+            };
+    
+            if(isChatOwner) {
+                author.role = "owner";
+            }
+    
+            if(isChatModerator) {
+                author.role = "mod";
+            }
+    
+            if ( isChatSponsor ){
+                author.role = "sponsor";
+            }
+            
+            authors.push(author);
+            io.emit("New author", author);
+        }
+        const message = {
             id,
             text: displayMessage,
-            author: displayName,
-            avatarUrl: profileImageUrl,
+            authorId: channelId,
             publishedAt
-        }
-    });
-    messages.push(...newMessages);
+        };
+        messages.push(message);
+        io.emit("New messages", message);
+    }
     messages.sort((a,b) => +(new Date(a.publishedAt)) - +(new Date(b.publishedAt)));
-    io.emit("New messages", newMessages);
 }
 
 export function getMessages() {
-    console.log(messages.length);
     return messages;
+}
+export function getAuthors() {
+    return authors;
 }
