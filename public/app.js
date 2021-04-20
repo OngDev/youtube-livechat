@@ -6,11 +6,10 @@ const socket = io();
       return {
         messages: [],
         authors: [],
-        rederingMessages: []
       };
     },
     template: `
-    <div class="message-container" v-for="message in rederingMessages">
+    <div class="message-container" v-for="message in messages">
       <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
       <p class="message-text"><b>{{message.text}}</b></p>
     </div>`,
@@ -20,35 +19,41 @@ const socket = io();
 // id: "LCC.CikqJwoYVUNBMnRGazJOZHpPektwU0pkZjI0Y0FnEgtCc3kwV0RPTE5PZxI6ChpDSkx3OWViS2hmQUNGZUFOclFZZER6NEpVdxIcQ042MGhmTEFoZkFDRlU0QXR3QWRyWGdOLUExNQ"
 // publishedAt: "2021-04-17T15:23:14.842695+00:00"
 // text: "oke"
-      
-      await this.fetchMessages();
       await this.fetchAuthors();
-      this.mapMessages();
-      socket.on("New message", (newMessage) => {
-        console.log(newMessage)
-        this.messages.push(newMessage);
-        this.mapMessages();
-      });
-      socket.on("New author", (author) => {
-        console.log(author)
-        this.authors.push(author);
-      });
+      await this.fetchMessages();
+      
+      socket.on("New author", this.newAuthorEventHandler);
+      socket.on("New message", this.newMessageEventHandler) ;
     },
     methods: {
       async fetchMessages() {
         const messageRes = await fetch('/messages');
-      const messages = await messageRes.json();
-      this.messages = messages;
+        const messages = await messageRes.json();
+        this.messages = this.mapMessages(messages.reverse());
       },
       async fetchAuthors() {
         const authorRes = await fetch('/authors');
       const authors = await authorRes.json();
       this.authors = authors;
       },
-      mapMessages() {
-        const reversedMessages = this.messages.slice().reverse();
+      newAuthorEventHandler(author) {
+        this.authors.push(author);
+        this.$forceUpdate();
+      },
+      newMessageEventHandler(newMessage) {
+        const author = this.authors.find(({id}) => id === newMessage.authorId);
+        const parsedMessage = {
+          ...newMessage,
+          avatarUrl: author.avatarUrl,
+            authorName: author.name,
+            authorRole: author.role,
+        }
+        this.messages.unshift(parsedMessage);
+        this.$forceUpdate();
+      },
+      mapMessages(messages) {
         const authors = [...this.authors];
-        this.rederingMessages = reversedMessages.map((message) => {
+        return messages.map((message) => {
           const author = authors.find(({id}) => id === message.authorId);
           return {
             ...message,
@@ -58,7 +63,7 @@ const socket = io();
           }
         })
       }
-    }
+    },
   };
 
   createApp(App).mount("#app");
