@@ -2,11 +2,26 @@ import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
+import { createServer } from "http";
+import { Server } from "socket.io";
+
 import {fetchMessages, getMessages} from "./services.js";
 
 const app = express()
+const httpServer = createServer(app);
+const io = new Server(httpServer);
 
-app.use(helmet())
+app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ['*'],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'http://unpkg.com/vue@next'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com/css', 'https://use.fontawesome.com/releases/v5.12.0/css/all.css'],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: [],
+      },
+    },
+  }));
 app.use(morgan('tiny'))
 app.use(cors());
 app.use(express.json())
@@ -37,6 +52,8 @@ app.use((err, req, res) => {
 })
 
 const PORT = process.env.PORT || 3333;
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
-})
+});
+
+export default io;
