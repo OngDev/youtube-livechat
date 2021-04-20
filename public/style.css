@@ -1,18 +1,25 @@
+:root {
+    --font-root: 'Poppins', sans-serif;
+    --background: hsl(0, 0%, 7%);
+    --background-header: hsl(0, 0%, 13%);
+    --background-message: hsl(210, 8%, 20%);
+    --author-name-color: hsl(36, 100%, 93%);
+    --message-text-color: hsla(0, 0%, 100%, 0.9);
+}
 *, html, body {
     padding: 0;
     margin: 0;
 }
 
 html {
-    font-family: 'Poppins', sans-serif;
-    background-color: #2c2c2c;
+    font-family: var(--base-font);
+    background-color: var(--background);
 }
 
 .message-container {
     border-radius: 5px;
     max-width: 400px;
-    border: 1px solid #ffb347;
-    background-color: #FFF1DC;
+    background-color: var(--background-message);
     margin: 10px auto;
     padding: 5px;
 }
@@ -20,6 +27,7 @@ html {
 .author-info {
     display: flex;
     align-items: center;
+    color: var(--author-name-color);
 }
 
 .author-info img {
@@ -30,5 +38,5 @@ html {
 }
 
 .message-text {
-
+    color: var(--message-text-color);
 }
