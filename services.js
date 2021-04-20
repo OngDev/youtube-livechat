@@ -76,7 +76,7 @@ const mapMessages = (items) => {
             publishedAt
         };
         messages.push(message);
-        io.emit("New messages", message);
+        io.emit("New message", message);
     }
     messages.sort((a,b) => +(new Date(a.publishedAt)) - +(new Date(b.publishedAt)));
 }
@@ -86,4 +86,8 @@ export function getMessages() {
 }
 export function getAuthors() {
     return authors;
+}
+
+export function archiveMessage(messageId) {
+    messages = messages.filter(({id}) => id === messageId);
 }

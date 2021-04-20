@@ -40,11 +40,11 @@ app.get('/messages', async (req, res) => {
 });
 app.get('/authors', async (req, res) => {
     res.send(getAuthors());
-})
-app.get('/messages/:id', async (req, res) => {
+});
+app.get('/messages/:id/archive', async (req, res) => {
     const {id} = req.params;
-    archiveMessage(id);
-    res.send();
+    await archiveMessage(id);
+    res.status(200).end();
 });
 app.use('/', (req, res) => {
     res.send("Hế lô hế lô, Ông Dev đây!");
