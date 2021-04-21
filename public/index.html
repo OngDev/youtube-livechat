@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live chat manager</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,8 +14,9 @@
     <main>
         <div id="app">
             <div class="message-container" v-for="message in messages">
-                <div class="">
-                    <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
+                <img class="author-avata" :src="message.avatarUrl"/>
+                <div class="text-container">
+                    <div class="author-info">{{message.authorName}} {{message.authorRole}}</div>
                     <p class="message-text"><b>{{message.text}}</b></p>
                 </div>
                 <button class="button-archive"><img src="./img/icon_archive.svg" alt=""></button>

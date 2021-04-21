@@ -1,5 +1,5 @@
 :root {
-    --font-root: 'Poppins', sans-serif;
+    --font-root: 'Roboto', sans-serif;
     --background: hsl(0, 0%, 7%);
     --background-header: hsl(0, 0%, 13%);
     --background-message: hsl(210, 8%, 20%);
@@ -13,30 +13,29 @@
 }
 
 html {
-    font-family: var(--base-font);
+    font-family: var(--font-root);
+    font-size: 0.75rem;
     background-color: var(--background);
 }
 
 .message-container {
+    display: flex;
     max-width: 20.75rem;
-    background-color: var(--background-message);
     margin: 1.25rem 1.5rem;
     padding: 0.75rem;
+
+    background-color: var(--background-message);
     border-radius: 7px;
-    display: flex;
-    justify-content: space-between;
 }
 
 .author-info {
-    display: flex;
-    align-items: center;
     color: var(--author-name-color);
+    font-weight: 500;
 }
 
 .author-info img {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
     margin-right: 20px;
 }
 
@@ -44,8 +43,17 @@ html {
     color: var(--message-text-color);
 }
 
+.author-avata {
+    border-radius: 50%;
+    width: 2.125rem;
+    height: 2.125rem;
+    margin: auto 0.75rem;
+}
+
 button {
+    display: flex;
+    justify-content: flex-end;
     background-color: var(--background-message);
     all: unset;
-    margin-left: 1.25rem;
+    margin-left: 0.25rem;
 }
