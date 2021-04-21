@@ -9,8 +9,8 @@
 - Show messages
 
 # version 2
-- Save authors
-- Author role
+- Save authors x
+- Author role x
 
 # version 3
 - Create special messages

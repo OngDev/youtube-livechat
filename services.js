@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import io from './index.js';
 dotenv.config();
 const MESSAGES_API_URL = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages';
-const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILQ3ZtOGVzYmdBeG8';
+const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILS3hRVlFkR010Y0E';
 const { API_KEY } = process.env;
 
 let messages = [];

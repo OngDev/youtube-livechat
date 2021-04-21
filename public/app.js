@@ -8,11 +8,6 @@ const socket = io();
         authors: [],
       };
     },
-    template: `
-    <div class="message-container" v-for="message in messages">
-      <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
-      <p class="message-text"><b>{{message.text}}</b></p>
-    </div>`,
     async mounted() {
 //       author: "Tiến Nguyễn"
 // avatarUrl: "https://yt3.ggpht.com/ytc/AAUvwnhPBnzVVk2vgEQ8ZcJaLe2Wf-rhe8pLAkkTSqwqWg=s88-c-k-c0x00ffffff-no-rj"

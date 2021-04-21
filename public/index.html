@@ -11,6 +11,10 @@
 </head>
 <body>
     <div id="app">
+        <div class="message-container" v-for="message in messages">
+            <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
+            <p class="message-text"><b>{{message.text}}</b></p>
+          </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
