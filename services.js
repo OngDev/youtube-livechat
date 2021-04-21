@@ -69,11 +69,18 @@ const mapMessages = (items) => {
             authors.push(author);
             io.emit("New author", author);
         }
+        let messageType = "normal";
+        if(displayMessage.includes("!hello")) {
+            messageType = "hello";
+        } else if( displayMessage.includes("!qna")) {
+            messageType = "qna";
+        }
         const message = {
             id,
             text: displayMessage,
             authorId: channelId,
-            publishedAt
+            publishedAt,
+            messageType
         };
         messages.push(message);
         io.emit("New message", message);
