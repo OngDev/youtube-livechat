@@ -35,8 +35,9 @@ app.use(express.static('./public'));
         console.error(e.message)
     }
 })();
-app.get('/messages', async (req, res) => {
-    res.send(getMessages());
+app.get('/messages', async (req, res) => {// messages?type=...
+    const {type} = req.query;
+    res.send(getMessages(type));
 });
 app.get('/authors', async (req, res) => {
     res.send(getAuthors());
