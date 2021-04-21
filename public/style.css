@@ -6,6 +6,7 @@
     --author-name-color: hsl(36, 100%, 93%);
     --message-text-color: hsla(0, 0%, 100%, 0.9);
 }
+
 *, html, body {
     padding: 0;
     margin: 0;
@@ -17,11 +18,13 @@ html {
 }
 
 .message-container {
-    border-radius: 5px;
-    max-width: 400px;
+    max-width: 20.75rem;
     background-color: var(--background-message);
-    margin: 10px auto;
-    padding: 5px;
+    margin: 1.25rem 1.5rem;
+    padding: 0.75rem;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .author-info {
@@ -39,4 +42,10 @@ html {
 
 .message-text {
     color: var(--message-text-color);
+}
+
+button {
+    background-color: var(--background-message);
+    all: unset;
+    margin-left: 1.25rem;
 }

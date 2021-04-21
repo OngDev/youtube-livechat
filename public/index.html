@@ -10,12 +10,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <div class="message-container" v-for="message in messages">
-            <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
-            <p class="message-text"><b>{{message.text}}</b></p>
-          </div>
-    </div>
+    <header></header>
+    <main>
+        <div id="app">
+            <div class="message-container" v-for="message in messages">
+                <div class="">
+                    <div class="author-info"><img :src="message.avatarUrl"/> {{message.authorName}} {{message.authorRole}}</div>
+                    <p class="message-text"><b>{{message.text}}</b></p>
+                </div>
+                <button class="button-archive"><img src="./img/icon_archive.svg" alt=""></button>
+            </div>
+        </div>
+    </main>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
     <script type="text/javascript" src="app.js"></script>
