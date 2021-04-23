@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import io from './index.js';
 dotenv.config();
 const MESSAGES_API_URL = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages';
-const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILS3hRVlFkR010Y0E';
+const livechatId = 'KicKGFVDTEFlaDVTRGpVQk9qbkU4SFRYSkxHdxILZ3BqbWVtTnFYN3c';
 const { API_KEY } = process.env;
 const HELLO = "hello";
 const QNA = "qna";
@@ -56,19 +56,19 @@ const mapMessages = (items) => {
                 avatarUrl: profileImageUrl,
                 role: "chauongdev"
             };
-    
+
             if(isChatOwner) {
                 author.role = "owner";
             }
-    
+
             if(isChatModerator) {
                 author.role = "mod";
             }
-    
+
             if ( isChatSponsor ){
                 author.role = "sponsor";
             }
-            
+
             authors.push(author);
             io.emit("New author", author);
         }
@@ -102,7 +102,7 @@ export function getMessages(type) {
         default:
             return messages;
     }
-    
+
 }
 export function getAuthors() {
     return authors;
