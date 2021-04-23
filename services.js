@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import io from './index.js';
 dotenv.config();
 const MESSAGES_API_URL = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages';
-const livechatId = 'KicKGFVDTEFlaDVTRGpVQk9qbkU4SFRYSkxHdxILZ3BqbWVtTnFYN3c';
+const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILM0UyNXVjaE1KQnM';
 const { API_KEY } = process.env;
 const HELLO = "hello";
 const QNA = "qna";
@@ -54,19 +54,23 @@ const mapMessages = (items) => {
                 id: channelId,
                 name: displayName,
                 avatarUrl: profileImageUrl,
-                role: "chauongdev"
+                // role: "chauongdev"
+                role: "👶"
             };
 
             if(isChatOwner) {
-                author.role = "owner";
+                // author.role = "owner";
+                author.role = "👑";
             }
 
             if(isChatModerator) {
-                author.role = "mod";
+                // author.role = "mod";
+                author.role = "🔧";
             }
 
-            if ( isChatSponsor ){
-                author.role = "sponsor";
+            if ( isChatSponsor ) {
+                // author.role = "sponsor";
+                author.role = "💎";
             }
 
             authors.push(author);
