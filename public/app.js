@@ -57,6 +57,12 @@ const socket = io();
             authorRole: author.role,
           }
         })
+      },
+      async archiveMessage(messageId) {
+        const res = await fetch(`/messages/${messageId}/archive`);
+        if(res.ok) {
+          this.messages = this.messages.filter(({id}) => id !== messageId);
+        }
       }
     },
   };

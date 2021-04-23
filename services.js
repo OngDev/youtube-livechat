@@ -109,5 +109,5 @@ export function getAuthors() {
 }
 
 export function archiveMessage(messageId) {
-    messages = messages.filter(({id}) => id === messageId);
+    messages = messages.filter(({id}) => id !== messageId);
 }

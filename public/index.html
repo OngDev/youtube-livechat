@@ -20,7 +20,7 @@
                     <div class="author-info">{{message.authorName}} {{message.authorRole}}</div>
                     <p class="message-text"><b>{{message.text}}</b></p>
                 </div>
-                <button class="button-archive"><img src="./img/icon_archive.svg" alt=""></button>
+                <button @click="archiveMessage(message.id)" class="button-archive"><img src="./img/icon_archive.svg" alt=""></button>
             </div>
         </div>
     </main>
