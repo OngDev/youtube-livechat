@@ -73,17 +73,14 @@ const mapMessages = (items) => {
             };
 
             if(isChatOwner) {
-                // author.role = "owner";
                 author.role = "👑";
             }
 
             if(isChatModerator) {
-                // author.role = "mod";
                 author.role = "🔧";
             }
 
             if ( isChatSponsor ) {
-                // author.role = "sponsor";
                 author.role = "💎";
             }
 
