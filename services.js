@@ -1,9 +1,10 @@
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import io from './index.js';
+import {YouTubeLiveChat} from 'youtube-live-chat-ts';
 dotenv.config();
 const MESSAGES_API_URL = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages';
-const livechatId = 'KicKGFVDQTJ0RmsyTmR6T3pLcFNKZGYyNGNBZxILM0UyNXVjaE1KQnM';
+const { YOUTUBE_CHANNEL_ID } = process.env;
 const { API_KEY } = process.env;
 const HELLO = "hello";
 const QNA = "qna";
@@ -13,10 +14,23 @@ let messages = [];
 let authors = [];
 let _pollingIntervalMillis, _nextPageToken;
 
+const handler = new YouTubeLiveChat(process.env.API_KEY);
+const currentLiveStreams = await handler.searchChannelForLiveVideoIds(YOUTUBE_CHANNEL_ID);
+const videoId = currentLiveStreams[0];
+const liveChatId = await handler.getLiveChatIdFromVideoId(videoId);
+
+handler.listen(liveChatId).subscribe((chatMessage) => {
+  if (chatMessage.snippet.type === 'textMessageEvent') {
+    console.log(`${data.authorDetails.displayName}: ${data.snippet.displayMessage}`);
+  }
+});
+
+handler.stop(liveChatId);
+
 export async function fetchMessages(pageToken = "") {
-    console.log({ pageToken })
+    console.log({ pageToken });
     let ENDPOINT =
-        `${MESSAGES_API_URL}?liveChatId=${livechatId}&part=snippet,authorDetails&key=${API_KEY}&maxResults=200`;
+        `${MESSAGES_API_URL}?liveChatId=${liveChatId}&part=snippet,authorDetails&key=${API_KEY}&maxResults=200`;
     if (pageToken) {
         ENDPOINT += `&pageToken=${pageToken}`;
     }
