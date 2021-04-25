@@ -18,7 +18,7 @@
                 <img class="author-avata" :src="message.avatarUrl"/>
                 <div class="text-container">
                     <div class="author-info">{{message.authorName}} {{message.authorRole}}</div>
-                    <p class="message-text"><b>{{message.text}}</b></p>
+                    <p class="message-text">{{message.text}}</p>
                 </div>
                 <button @click="archiveMessage(message.id)" class="button-archive"><img src="./img/icon_archive.svg" alt=""></button>
             </div>

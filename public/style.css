@@ -43,7 +43,7 @@ html {
 
 .message-text {
     color: var(--message-text-color);
-    max-width: 14.75rem;
+    word-break: break-word;
 }
 
 .author-avata {
