@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import { createServer } from "http";
+import { Server } from "socket.io";
 
 import {getAuthors, getMessages, archiveMessage, initialize} from "./services.js";
 
