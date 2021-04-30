@@ -14,7 +14,8 @@
     <header></header>
     <main>
         <div id="app">
-            <div class="message-container" v-for="message in messages">
+            <p id="error-message" v-if="error && error !== ''"></p>
+            <div v-else class="message-container" v-for="message in messages">
                 <img class="author-avata" :src="message.avatarUrl"/>
                 <div class="text-container">
                     <div class="author-info">{{message.authorName}} {{message.authorRole}}</div>

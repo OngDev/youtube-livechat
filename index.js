@@ -3,9 +3,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import { createServer } from "http";
-import { Server } from "socket.io";
 
-import {fetchMessages, getAuthors, getMessages, archiveMessage} from "./services.js";
+import {getAuthors, getMessages, archiveMessage, initialize} from "./services.js";
 
 const app = express()
 const httpServer = createServer(app);
@@ -28,13 +27,6 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(express.static('./public'));
 
-(async () => {
-    try {
-        await fetchMessages();
-    } catch (e) {
-        console.error(e.message)
-    }
-})();
 app.get('/messages', async (req, res) => {// messages?type=...
     const {type} = req.query;
     res.send(getMessages(type));
@@ -42,6 +34,9 @@ app.get('/messages', async (req, res) => {// messages?type=...
 app.get('/authors', async (req, res) => {
     res.send(getAuthors());
 });
+app.get('/init', async(req, res) => {
+    res.send(await initialize());
+})
 app.get('/messages/:id/archive', (req, res) => {
     const {id} = req.params;
     archiveMessage(id);

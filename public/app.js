@@ -6,19 +6,20 @@ const socket = io();
       return {
         messages: [],
         authors: [],
+        error: "",
       };
     },
     async mounted() {
-//       author: "Tiến Nguyễn"
-// avatarUrl: "https://yt3.ggpht.com/ytc/AAUvwnhPBnzVVk2vgEQ8ZcJaLe2Wf-rhe8pLAkkTSqwqWg=s88-c-k-c0x00ffffff-no-rj"
-// id: "LCC.CikqJwoYVUNBMnRGazJOZHpPektwU0pkZjI0Y0FnEgtCc3kwV0RPTE5PZxI6ChpDSkx3OWViS2hmQUNGZUFOclFZZER6NEpVdxIcQ042MGhmTEFoZkFDRlU0QXR3QWRyWGdOLUExNQ"
-// publishedAt: "2021-04-17T15:23:14.842695+00:00"
-// text: "oke"
-      await this.fetchAuthors();
-      await this.fetchMessages();
-
-      socket.on("New author", this.newAuthorEventHandler);
-      socket.on("New message", this.newMessageEventHandler) ;
+      const isInitialized = await this.initialize();
+      if(!isInitialized) {
+        this.error = "Failed to initialize livechat manager";
+      }else {
+        await this.fetchAuthors();
+        await this.fetchMessages();
+  
+        socket.on("New author", this.newAuthorEventHandler);
+        socket.on("New message", this.newMessageEventHandler) ;
+      }
     },
     methods: {
       async fetchMessages() {
@@ -63,6 +64,10 @@ const socket = io();
         if(res.ok) {
           this.messages = this.messages.filter(({id}) => id !== messageId);
         }
+      },
+      async initialize() {
+        const res = await fetch('/initialize');
+        return res.ok;
       }
     },
   };
