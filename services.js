@@ -23,13 +23,15 @@ export async function initialize() {
     const videoId = currentLiveStreams[0];
     const newLiveChatId = await handler.getLiveChatIdFromVideoId(videoId);
     
+    console.log(`New livechatId: ${newLiveChatId}`)
     if(newLiveChatId && newLiveChatId !== "") {
         if (newLiveChatId !== livechatId) {
             messages = [];
             await fetchMessages();
+        }else {
+            await fetchMessages(_nextPageToken);
         }
         return true;
-        
     }
     return false;
 }
