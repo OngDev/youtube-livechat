@@ -66,7 +66,7 @@ const socket = io();
         }
       },
       async initialize() {
-        const res = await fetch('/initialize');
+        const res = await fetch('/init');
         return res.ok;
       }
     },

@@ -14,7 +14,7 @@ const handler = new YouTubeLiveChat(API_KEY);
 let messages = [];
 let authors = [];
 let _pollingIntervalMillis, _nextPageToken;
-let livechatId = "";
+let liveChatId = "";
 
 
 
@@ -25,7 +25,7 @@ export async function initialize() {
     
     console.log(`New livechatId: ${newLiveChatId}`)
     if(newLiveChatId && newLiveChatId !== "") {
-        if (newLiveChatId !== livechatId) {
+        if (newLiveChatId !== liveChatId) {
             messages = [];
             await fetchMessages();
         }else {
@@ -37,7 +37,7 @@ export async function initialize() {
 }
 
 export async function fetchMessages(pageToken = "") {
-    if(!livechatId) {
+    if(!liveChatId) {
         console.log("Livechat Id is empty")
         return;
     }
