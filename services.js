@@ -25,7 +25,8 @@ export async function initialize() {
     
     console.log(`New livechatId: ${newLiveChatId}`)
     if(newLiveChatId && newLiveChatId !== "") {
-        if (newLiveChatId !== liveChatId) {
+        if (newLiveChatId !== livechatId) {
+            liveChatId = newLiveChatId;
             messages = [];
             await fetchMessages();
         }else {
