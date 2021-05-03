@@ -15,6 +15,7 @@ let messages = [];
 let authors = [];
 let _pollingIntervalMillis, _nextPageToken;
 let liveChatId = "";
+let isFetchingMessages = false;
 
 
 
@@ -29,11 +30,13 @@ export async function initialize() {
             liveChatId = newLiveChatId;
             messages = [];
             await fetchMessages();
-        }else {
-            await fetchMessages(_nextPageToken);
+        }else if(!isFetchingMessages) {
+            messages = [];
+            await fetchMessages(_nextPageToken); 
         }
         return true;
     }
+    isFetchingMessages = false;
     return false;
 }
 
@@ -43,6 +46,7 @@ export async function fetchMessages(pageToken = "") {
         return;
     }
     console.log({ pageToken });
+    isFetchingMessages = true;
     let ENDPOINT =
         `${MESSAGES_API_URL}?liveChatId=${liveChatId}&part=snippet,authorDetails&key=${API_KEY}&maxResults=200`;
     if (pageToken) {
