@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 import io from './index.js';
-import {YouTubeLiveChat} from 'youtube-live-chat-ts';
+import { YouTubeLiveChat } from 'youtube-live-chat-ts';
 dotenv.config();
 const MESSAGES_API_URL = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages';
 const { YOUTUBE_CHANNEL_ID, API_KEY } = process.env;
@@ -20,28 +20,33 @@ let isFetchingMessages = false;
 
 
 export async function initialize() {
-    const currentLiveStreams = await handler.searchChannelForLiveVideoIds(YOUTUBE_CHANNEL_ID);
-    const videoId = currentLiveStreams[0];
-    const newLiveChatId = await handler.getLiveChatIdFromVideoId(videoId);
-    
-    console.log(`New livechatId: ${newLiveChatId}`)
-    if(newLiveChatId && newLiveChatId !== "") {
-        if (newLiveChatId !== liveChatId) {
-            liveChatId = newLiveChatId;
-            messages = [];
-            await fetchMessages();
-        }else if(!isFetchingMessages) {
-            messages = [];
-            await fetchMessages(_nextPageToken); 
+    try {
+        const currentLiveStreams = await handler.searchChannelForLiveVideoIds(YOUTUBE_CHANNEL_ID);
+        const videoId = currentLiveStreams[0];
+        const newLiveChatId = await handler.getLiveChatIdFromVideoId(videoId);
+
+        console.log(`New livechatId: ${newLiveChatId}`)
+        if (newLiveChatId && newLiveChatId !== "") {
+            if (newLiveChatId !== liveChatId) {
+                liveChatId = newLiveChatId;
+                messages = [];
+                await fetchMessages();
+            } else if (!isFetchingMessages) {
+                messages = [];
+                await fetchMessages(_nextPageToken);
+            }
+            return true;
         }
-        return true;
+        
+    } catch (error) {
+        console.error(error.message);
     }
     isFetchingMessages = false;
     return false;
 }
 
 export async function fetchMessages(pageToken = "") {
-    if(!liveChatId) {
+    if (!liveChatId) {
         console.log("Livechat Id is empty")
         return;
     }
@@ -80,8 +85,8 @@ const mapMessages = (items) => {
         const { publishedAt, displayMessage } = snippet;
         const { channelId, displayName, profileImageUrl, isChatOwner, isChatSponsor, isChatModerator } = authorDetails;
 
-        const existedAuthor = authors.find(({id}) => id === channelId);
-        if(!existedAuthor) {
+        const existedAuthor = authors.find(({ id }) => id === channelId);
+        if (!existedAuthor) {
             const author = {
                 id: channelId,
                 name: displayName,
@@ -90,15 +95,15 @@ const mapMessages = (items) => {
                 role: "👶"
             };
 
-            if(isChatOwner) {
+            if (isChatOwner) {
                 author.role = "👑";
             }
 
-            if(isChatModerator) {
+            if (isChatModerator) {
                 author.role = "🔧";
             }
 
-            if ( isChatSponsor ) {
+            if (isChatSponsor) {
                 author.role = "💎";
             }
 
@@ -106,9 +111,9 @@ const mapMessages = (items) => {
             io.emit("New author", author);
         }
         let messageType = NORMAL;
-        if(displayMessage.includes("!"+HELLO)) {
+        if (displayMessage.includes("!" + HELLO)) {
             messageType = HELLO;
-        } else if( displayMessage.includes("!" + QNA)) {
+        } else if (displayMessage.includes("!" + QNA)) {
             messageType = QNA;
         }
         const message = {
@@ -121,17 +126,17 @@ const mapMessages = (items) => {
         messages.push(message);
         io.emit("New message", message);
     }
-    messages.sort((a,b) => +(new Date(a.publishedAt)) - +(new Date(b.publishedAt)));
+    messages.sort((a, b) => +(new Date(a.publishedAt)) - +(new Date(b.publishedAt)));
 }
 
 export function getMessages(type) {
     switch (type) {
         case HELLO:
-            return messages.filter(({messageType}) => messageType === HELLO);
+            return messages.filter(({ messageType }) => messageType === HELLO);
         case QNA:
-            return messages.filter(({messageType}) => messageType === QNA);
+            return messages.filter(({ messageType }) => messageType === QNA);
         case NORMAL:
-            return messages.filter(({messageType}) => messageType === NORMAL);
+            return messages.filter(({ messageType }) => messageType === NORMAL);
         default:
             return messages;
     }
@@ -142,5 +147,5 @@ export function getAuthors() {
 }
 
 export function archiveMessage(messageId) {
-    messages = messages.filter(({id}) => id !== messageId);
+    messages = messages.filter(({ id }) => id !== messageId);
 }
