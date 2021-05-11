@@ -17,7 +17,10 @@ let _pollingIntervalMillis, _nextPageToken;
 let liveChatId = "";
 let isFetchingMessages = false;
 
-
+export function stopFetching() {
+    liveChatId = "";
+    messages = [];
+}
 
 export async function initialize() {
     try {
@@ -46,7 +49,7 @@ export async function initialize() {
 }
 
 export async function fetchMessages(pageToken = "") {
-    if (!liveChatId) {
+    if(!liveChatId || liveChatId === "") {
         console.log("Livechat Id is empty")
         return;
     }

@@ -5,7 +5,7 @@ import cors from 'cors';
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-import {getAuthors, getMessages, archiveMessage, initialize} from "./services.js";
+import {getAuthors, getMessages, archiveMessage, initialize, stopFetching} from "./services.js";
 
 const app = express()
 const httpServer = createServer(app);
@@ -37,6 +37,10 @@ app.get('/authors', async (req, res) => {
 });
 app.get('/init', async(req, res) => {
     res.send(await initialize());
+})
+app.get('/stop', (req, res) => {
+    stopFetching();
+    res.status(200).end();
 })
 app.get('/messages/:id/archive', (req, res) => {
     const {id} = req.params;
