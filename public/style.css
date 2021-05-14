@@ -41,7 +41,7 @@ html {
 }
 
 .message-container:hover {
-    transform: scale(1.075);
+    transform: scale(1.05);
     transition: all 0.5s;
 }
 
