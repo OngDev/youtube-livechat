@@ -16,7 +16,7 @@ const socket = io();
       }else {
         await this.fetchAuthors();
         await this.fetchMessages();
-  
+
         socket.on("New author", this.newAuthorEventHandler);
         socket.on("New message", this.newMessageEventHandler) ;
       }

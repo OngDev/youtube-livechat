@@ -40,7 +40,7 @@ export async function initialize() {
             }
             return true;
         }
-        
+
     } catch (error) {
         console.error(error.message);
     }
