@@ -38,7 +38,7 @@
 
 html {
     font-family: var(--font-root);
-    font-size: 0.75rem;
+    font-size: 13px;
     background-color: var(--background);
 }
 
