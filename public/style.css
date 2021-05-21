@@ -1,5 +1,29 @@
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 300;
+  src: local(''),
+       url('../fonts/roboto-mono-v13-latin-300.woff2') format('woff2'),
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/roboto-mono-v13-latin-regular.woff2') format('woff2'),
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+       url('../fonts/roboto-mono-v13-latin-700.woff2') format('woff2'),
+}
+
 :root {
-    --font-root: 'Roboto', sans-serif;
+    --font-root: 'Roboto Mono', sans-serif;
     --background: hsl(0, 0%, 7%);
     --background-header: hsl(0, 0%, 13%);
     --background-message: hsl(210, 8%, 20%);
