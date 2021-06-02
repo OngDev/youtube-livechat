@@ -1,11 +1,14 @@
 # youtube-livechat (Archived)
 
 **UPDATE** project moving to:
-- https://github.com/OngDev/client
-- https://github.com/OngDev/server
+
+- <https://github.com/OngDev/client>
+- <https://github.com/OngDev/server>
 
 ## Note
-**version 1**
+
+### version 1
+
 - Get livechatId
 - Get Api key
 - hard code livechatId
@@ -13,12 +16,15 @@
 - Send socket event to client
 - Show messages
 
-**version 2**
+### version 2
+
 - Save authors x
 - Author role x
 
-**version 3**
+### version 3
+
 - Create special messages
 !qna ahihi
 !hello
 - Ong Dev interact with messages
+
